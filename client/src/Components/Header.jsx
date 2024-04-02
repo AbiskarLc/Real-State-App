@@ -7,8 +7,8 @@ import { toggleTheme } from "../Redux/Theme/ThemeSlice";
 const Header = () => {
 
   const {theme} = useSelector(state=>state.theme)
-  console.log(theme);
   const location = useLocation();
+
   const [acive, setActive] = useState();
   const [signed,setSigned] = useState(false);
 const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const dispatch = useDispatch();
   useEffect(()=>{
 setActive(location.pathname);
   },[location.pathname])
-  console.log(acive);
+
   return (
     <div className=" mx-auto  dark:text-gray-600 shadow-sm">
       <Navbar>
@@ -60,14 +60,14 @@ setActive(location.pathname);
         <Navbar.Toggle />
 
         <Navbar.Collapse className="text-gray-600 cursor-pointer">
-          <Navbar.Link className=" cursor-pointer md:text-md" active={acive==="/"}>
+          <Navbar.Link as={"div"}  className=" cursor-pointer md:text-md" active={acive==="/"}>
             <Link to={"/"}>Home</Link>
 
           </Navbar.Link>
-          <Navbar.Link className=" cursor-pointer md:text-md"  active={acive==="/dashboard"}>
+          <Navbar.Link as={"div"} className=" cursor-pointer md:text-md"  active={acive==="/dashboard"}>
            <Link to={"/dashboard"}>Dashboard</Link>
           </Navbar.Link>
-          <Navbar.Link className=" cursor-pointer md:text-md">
+          <Navbar.Link as={"div"} className=" cursor-pointer md:text-md">
           <Link to={"/about"}>About</Link>
           </Navbar.Link>
         </Navbar.Collapse>

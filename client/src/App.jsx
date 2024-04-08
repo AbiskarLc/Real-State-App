@@ -6,6 +6,7 @@ import Signin from "./Pages/Signin";
 import SignOut from "./Pages/SignOut";
 import Dashboard from "./Pages/Dashboard";
 import Profile from "./Pages/Profile";
+import PrivateRoute from './Components/PrivateRoute';
 import SignUp from './Pages/SignUp';
 import About from './Pages/About';
 function App() {
@@ -18,8 +19,9 @@ function App() {
       <Route element={<Home/>} path="/"/>
       <Route element={<Signin/>} path="/signin"/>
       <Route element={<SignOut/>} path="/signout"/>
-      <Route element={<Profile/>} path="/profile"/>
+      <Route element={<PrivateRoute/>}>
       <Route element={<Dashboard/>} path="/dashboard"/>
+      </Route>
       <Route element={<SignUp/>} path="/signup"/>
       <Route element={<About/>} path="/about"/>
 

@@ -1,16 +1,19 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaMoon, FaSearch, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../Redux/Theme/ThemeSlice";
+import { stateContext } from "../Context/stateContexts";
 const Header = () => {
 
+  const user = useSelector(state=>state.user);
+const context = useContext(stateContext);
+const {signOutUser} = context;
+  const {currentUser} = user;
   const {theme} = useSelector(state=>state.theme)
   const location = useLocation();
-
   const [acive, setActive] = useState();
-  const [signed,setSigned] = useState(false);
 const dispatch = useDispatch();
 
   useEffect(()=>{
@@ -41,13 +44,20 @@ setActive(location.pathname);
         <div className=" sm:flex md:order-3 hidden ">
           {
 
-            signed?
-            <Dropdown arrowIcon={false} inline label={<Avatar img={"https://cdn-icons-png.flaticon.com/512/149/149071.png"} rounded/>}>
+            currentUser?
+            <Dropdown arrowIcon={false} inline label={<Avatar img={currentUser.profilePicture} rounded/>}>
             <Dropdown.Header>
-            <span className="block text-sm">Abiskar Lamichhane</span>
-            <span className="block truncate text-sm font-medium">abi@gmail.com</span>
+            <span className="block text-sm">{currentUser.username}</span>
+            <span className="block truncate text-sm font-medium">{currentUser.email}</span>
             </Dropdown.Header>
-            <Dropdown.Item >Profile</Dropdown.Item>
+            <Dropdown.Item >
+              <Link to={"/dashboard?tab=profile"}>  Profile</Link>
+            
+              </Dropdown.Item>
+            <Dropdown.Item onClick={signOutUser}>
+              SignOut
+            </Dropdown.Item>
+
           </Dropdown>:
           <>
           <Button gradientDuoTone={"purpleToPink"} outline>

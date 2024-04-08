@@ -3,8 +3,8 @@ import {Alert, Button, Spinner, TextInput} from 'flowbite-react';
 import { FaGoogle } from "react-icons/fa";
 import {Link,useNavigate} from "react-router-dom"
 import axios from 'axios';
+import OAuth from '../Components/OAuth';
 const SignUp = () => {
-
   const navigate = useNavigate();
   const [user,setUser] = useState()
  const [error,setError] = useState(null);
@@ -46,10 +46,7 @@ const SignUp = () => {
       }
       
     } catch (error) {
-      
-      
-      console.log(error.response.data.message);
-      setLoading(false)
+      setLoading(false);
       setError(error.response.data.message);
     }
   }
@@ -62,7 +59,7 @@ const SignUp = () => {
         <TextInput placeholder='Password' onChange={handleOnChange} type='password' name='password'/>
 
         <Button gradientDuoTone={"purpleToPink"} type='submit'  outline>{loading?<><Spinner size={"sm"}/> <span className='ml-1 text-sm'>Loading...</span></>  :"Sign Up"}</Button>
-        <Button  outline><span className=' mr-2'><FaGoogle/></span>Signup with google</Button>
+        <OAuth text={"Signup With Google"}/>
         {
         error &&
         <Alert color={"red"} className='text-center'>{error}</Alert>

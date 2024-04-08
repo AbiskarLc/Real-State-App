@@ -1,7 +1,10 @@
 require("dotenv").config();
 const errorMiddleware = require("./Middleware/error-middleware");
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
+
 const connectDbs = require("./Database/connection");
 const app = express();
 const port = process.env.PORT || 8000;
@@ -15,8 +18,8 @@ const corsOptions = {
 }
 
 app.use(express.json());
-
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use("/api/user",userroute);
 app.use("/api/auth",authroute);
 
@@ -27,5 +30,5 @@ app.use(errorMiddleware);
 connectDbs().then(() => {
   app.listen(port, () => {
     console.log(`listening at port ${port}`);
-  });
+  })
 });

@@ -6,6 +6,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { signInStart,signInSuccess,signInFailure, resetError, } from '../Redux/Theme/userSlice';
 import axios from 'axios';
 import OAuth from '../Components/OAuth';
+import Error from '../Components/Error';
 const Signin = () => {
 
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ if(error){
         <OAuth text="Continue with Google"/>
        {
         error &&
-        <Alert color={"failure"}>{error.message}</Alert>
+       <Error error={error.message}/>
        }
       </form>
       <div className=" flex gap-1 mx-4 mt-2">

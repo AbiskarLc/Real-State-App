@@ -4,22 +4,22 @@ import DashSideBar from './DashSideBar';
 import Profile from './Profile';
 const Dashboard = () => {
 
-  const [tab,setTab] = useState();
+  // const [tab,setTab] = useState();
 
 
-  useEffect(()=>{
-    const urlParams = new URLSearchParams(location.search);
+  // useEffect(()=>{
+  //   const urlParams = new URLSearchParams(location.search);
   
-    const tabFromUrl = urlParams.get('tab');
+  //   const tabFromUrl = urlParams.get('tab');
 
-    setTab(tabFromUrl);
+  //   setTab(tabFromUrl);
 
-  },[location.search])
+  // },[location.search])
 
   
   return (
     <div className='min-h-screen flex md:flex-row flex-col'>
-      <div className='md:w-56'>
+      {/* <div className='md:w-56'>
         <DashSideBar tab={tab}/>
       </div>
 
@@ -29,7 +29,7 @@ tab === "profile" ?<Profile/>:<></>
 
 }
        
-          
+           */}
       
     </div>
   )

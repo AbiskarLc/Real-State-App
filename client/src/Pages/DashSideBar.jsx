@@ -11,7 +11,7 @@ const DashSideBar = ({tab}) => {
           <Sidebar.Item icon={HiChartPie} active={tab==="dashboard"}>
               Dashboard
           </Sidebar.Item>
-          <Sidebar.Item  icon={HiUser} active={tab==="profile"}>
+          <Sidebar.Item  icon={HiUser} active={tab==="profile"} as={"div"}>
            <Link to={"/dashboard?tab=profile"}>Profile</Link> 
           </Sidebar.Item>
         </Sidebar.ItemGroup>

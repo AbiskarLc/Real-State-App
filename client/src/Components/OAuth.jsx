@@ -11,10 +11,7 @@ const OAuth = (props) => {
 
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
-  // const [userinfo,setUserInfo] = useState({
-  
-  // })
+  const navigate = useNavigate();
   const handleGoogleClick =async () =>{
 
     try {

@@ -78,7 +78,6 @@ const signOut= (req,res,next)=>{
 
 
     try {
-        console.log("hwllo");
         const token = req.cookies.token;
 
         if(!token){
@@ -139,6 +138,7 @@ const googleSignup = async (req,res,next) =>{
         next(error);
     }
 }
+
 
 
 module.exports = {signupUser,signinUser,signOut,googleSignup}

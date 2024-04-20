@@ -51,7 +51,7 @@ setActive(location.pathname);
             <span className="block truncate text-sm font-medium">{currentUser.email}</span>
             </Dropdown.Header>
             <Dropdown.Item >
-              <Link to={"/dashboard?tab=profile"}>  Profile</Link>
+              <Link to={"/profile"}>  Profile</Link>
             
               </Dropdown.Item>
             <Dropdown.Item onClick={signOutUser}>

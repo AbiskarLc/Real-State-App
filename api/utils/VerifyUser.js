@@ -13,7 +13,6 @@ const verifyUser = async (req, res, next) => {
         return next({ status: 401, message: "Unauthorized" });
       }
 
-      console.log(data);
       req.user = data;
 
       next();

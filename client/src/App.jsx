@@ -3,12 +3,12 @@ import Header from './Components/Header';
 import { BrowserRouter,Route,Routes } from 'react-router-dom';
 import Home from './Pages/Home';
 import Signin from "./Pages/Signin";
-import SignOut from "./Pages/SignOut";
 import Dashboard from "./Pages/Dashboard";
 import Profile from "./Pages/Profile";
 import PrivateRoute from './Components/PrivateRoute';
 import SignUp from './Pages/SignUp';
 import About from './Pages/About';
+import CreateListing from './Components/CreateListing';
 function App() {
 
   return (
@@ -18,12 +18,13 @@ function App() {
     <Routes>
       <Route element={<Home/>} path="/"/>
       <Route element={<Signin/>} path="/signin"/>
-      <Route element={<SignOut/>} path="/signout"/>
       <Route element={<PrivateRoute/>}>
       <Route element={<Profile/>} path="/profile"/>
+      <Route element={<CreateListing/>} path='/create-listing'/>
       </Route>
       <Route element={<Dashboard/>} path='/dashboard'/>
       <Route element={<SignUp/>} path="/signup"/>
+      <Route  element={<></>} path='/lists/'/>
       <Route element={<About/>} path="/about"/>
 
     </Routes>

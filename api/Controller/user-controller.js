@@ -1,4 +1,5 @@
 const User = require("../Database/Model/User");
+const List = require("../Database/Model/List");
 const bcrypt = require("bcrypt");
 
 const updateUser = async (req, res, next) => {
@@ -76,4 +77,27 @@ console.log("hello");
     }
 }
 
-module.exports = { updateUser,deleteUser };
+const getUserLists = async (req,res,next) =>{
+
+
+  try {
+      
+      const {id} = req.user;
+      const userId = req.params.userId;
+
+      if(id!==userId){
+          return next({status:401,message:"Unauthorized user"});
+      }
+
+      const lists = await List.find({userRef:userId});
+      console.log(lists);
+      if(!lists){
+          return next({status:500,message:"Server Error Occurred"});
+      }
+
+      return res.status(200).json(lists);
+  } catch (error) {
+      next(error);
+  }
+}
+module.exports = { updateUser,deleteUser,getUserLists };

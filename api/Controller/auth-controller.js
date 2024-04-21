@@ -49,13 +49,14 @@ const signinUser = async (req,res,next) =>{
        if(!password){
         return next({status:400,message:"Fill the password field"})
        }
-
+       
        const userData = await User.findOne({email:email});
+       if(!userData){
+          return next({status:404,message:"User not found",extraDetails:"Enter valid credentials"});
+       }
+
        const hashPassword = userData.password;
 
-     if(!userData){
-        return next({status:404,message:"User not found",extraDetails:"Enter valid credentials"});
-     }
      const verifyPassword = await bcrypt.compare(password,hashPassword);
 
      if(!verifyPassword){
@@ -68,7 +69,7 @@ const signinUser = async (req,res,next) =>{
      const {password: pass,...rest} = userData._doc;
      return   res.cookie("token",token,{httpOnly:true}).status(200).json(rest);
     } catch (error) {
-        
+        console.log(error)
         next(error);
     }
 }

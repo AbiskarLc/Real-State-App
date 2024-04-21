@@ -75,7 +75,7 @@ setActive(location.pathname);
 
           </Navbar.Link>
           <Navbar.Link as={"div"} className=" cursor-pointer md:text-md"  active={acive==="/dashboard"}>
-           <Link to={"/dashboard"}>Dashboard</Link>
+           <Link to={"/profile"}>Dashboard</Link>
           </Navbar.Link>
           <Navbar.Link as={"div"} className=" cursor-pointer md:text-md">
           <Link to={"/about"}>About</Link>

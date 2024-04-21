@@ -7,4 +7,5 @@ const verifyUser = require('../utils/VerifyUser');
 
 router.route("/updateUser/:userId").put(verifyUser,controller.updateUser);
 router.route("/deleteUser/:userId").delete(verifyUser,controller.deleteUser)
+router.route("/getLists/:userId").get(verifyUser,controller.getUserLists)
 module.exports = router;

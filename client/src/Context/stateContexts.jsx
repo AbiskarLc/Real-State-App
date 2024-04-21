@@ -11,8 +11,6 @@ export const stateContext = createContext();
     const dispatch = useDispatch();
 
  const signOutUser = async () =>{
-
-console.log("Hello");
     try {
         dispatch(signOutStart());
         

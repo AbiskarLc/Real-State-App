@@ -100,4 +100,35 @@ const getUserLists = async (req,res,next) =>{
       next(error);
   }
 }
-module.exports = { updateUser,deleteUser,getUserLists };
+
+const deleteUserList = async (req,res,next) =>{
+
+  try {
+
+    const userId = req.user.id;
+    const listId = req.params.listId;
+
+    const findList = await List.findById(listId);
+
+    if(!findList){
+      return next({status:404,message:"Failed to get the list"});
+    }
+    if(findList.userRef === userId){
+      const deletedList = await List.findByIdAndDelete(listId);
+
+    if(!deletedList){
+      return next({status:400,message:"Failed to delete the list"});
+    }
+
+    return res.status(200).json({message:"List deleted Successfully"});
+    
+    }else{
+      return next({status:401,message:"Unauthorized user"});
+    }
+    
+  } catch (error) {
+    next(error);
+  }
+
+}
+module.exports = { updateUser,deleteUser,getUserLists,deleteUserList };

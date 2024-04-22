@@ -19,6 +19,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { FaArrowDown } from "react-icons/fa";
 import axios from "axios";
 import Message from "../Components/Message";
 import { Link } from "react-router-dom";
@@ -30,6 +31,8 @@ const Profile = () => {
   const { currentUser, loading } = useSelector((state) => state.user);
   const [togglemodal, setToggleModal] = useState(false);
   const [file, setFile] = useState(undefined);
+  const [lists, setLists] = useState([]);
+  const [showList, setShowList] = useState(false);
   const [fileerror, setFileError] = useState(null);
   const { signOutUser } = useContext(stateContext);
   const [action, setAction] = useState("");
@@ -39,14 +42,15 @@ const Profile = () => {
     username: currentUser.username,
     email: currentUser.email,
     profilePicture: currentUser.profilePicture,
-    password:''
+    password: "",
   });
   useEffect(() => {
+    getUserLists();
     if (file) {
       uploadFileTask();
     }
-  }, [file]);
-
+  }, []);
+  console.log(lists);
   if (fileerror || message) {
     setTimeout(() => {
       setFileError(null);
@@ -107,6 +111,26 @@ const Profile = () => {
     );
   };
 
+  const getUserLists = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/user/getLists/${currentUser._id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.data) {
+        console.log("lists fetched successfully");
+        setLists(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -124,12 +148,10 @@ const Profile = () => {
 
       if (response.data) {
         setMessage("Profile Updated Successfully");
-           setFormData(
-            {
-              ...formdata,
-              password:''
-            }
-           )
+        setFormData({
+          ...formdata,
+          password: "",
+        });
         dispatch(signInSuccess(response.data));
       }
     } catch (error) {
@@ -147,9 +169,34 @@ const Profile = () => {
     });
   };
 
+  const handleListDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/api/user/deleteList/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.data) {
+        setMessage(response.data.message);
+        setLists(
+          lists.filter((list) => {
+            return list._id !== id;
+          })
+        );
+      }
+    } catch (error) {
+      setFileError(error.response.data.message);
+      console.log(error);
+    }
+  };
   return (
     <>
-      <div className="max-w-xl mx-auto w-full">
+      <div className="max-w-xl mx-auto w-full min-h-screen pb-3">
         <h1 className="text-3xl text-center  mt-8 font-semibold">
           User Profile
         </h1>
@@ -234,19 +281,13 @@ const Profile = () => {
           >
             Update Profile
           </Button>
-          <Button color="success" outline as={"div"}>
-            <Link to={"/create-listing"}>
-            Create Listing
-            </Link>
-            </Button>
-          {
-          fileerror && <Message message={fileerror} type={"failure"}/>}
-          {
-            message && <Message message={message} type={"success"}/>
-          }
-          
+          <Button color="success" outline>
+            <Link to={"/create-listing"}>Create Listing</Link>
+          </Button>
+          {fileerror && <Message message={fileerror} type={"failure"} />}
+          {message && <Message message={message} type={"success"} />}
         </form>
-        
+
         <div className="mx-2 mt-2 flex justify-between">
           <p
             className=" text-red-600  cursor-pointer"
@@ -267,6 +308,68 @@ const Profile = () => {
             Delete Account
           </p>
         </div>
+        {
+  lists.length >0 &&
+  <div className="mt-2 flex justify-center text-sm items-center gap-1">
+          <p
+            className="text-green-700 cursor-pointer  text-center"
+            onClick={() => setShowList(showList ? false : true)}
+          >
+            {showList ? "Hide Listing" : "Show Listings"}
+          </p>
+          <FaArrowDown color="green" />
+        </div>
+
+        }
+        
+        {showList && lists.length > 0 && (
+          <>
+            <div className=" flex flex-col gap-2 my-2 mx-2">
+              <h2 className="text-center text-2xl font-semibold">
+                Your Listings
+              </h2>
+              {lists.map((list, index) => {
+                return (
+                  <>
+                    <div
+                      key={list._id}
+                      className=" flex gap-2  items-center  border-2 rounded-md border-teal-400 dark:border-gray-300 p-1 transition-all shadow-lg cursor-pointer"
+                    >
+                      <img
+                        src={list.imageUrls[0]}
+                        className=" rounded-lg"
+                        width={"150px"}
+                        height={"15hover:0px"}
+                        alt={`image of list id ${list._id}`}
+                      />
+                      <div className=" flex justify-between flex-1 items-center">
+                      <Link
+                        to={`/lists/${list._id}`}
+                        className=" text-gray-700 text-xl dark:text-gray-200 text-start font-semibold hover:underline"
+                      >
+                        {list.name.length > 30
+                          ? list.name.slice(0, 30)
+                          : list.name}
+                      </Link>
+                      <div className=" flex flex-col justify-center items-center gap-1">
+                        <p className=" text-green-500 hover:underline text-lg cursor-pointer">
+                          Edit
+                        </p>
+                        <p
+                          className=" text-red-600 hover:underline text-lg cursor-pointer"
+                          onClick={() => handleListDelete(list._id)}
+                        >
+                          delete
+                        </p>
+                      </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
+          </>
+        )}
 
         {/* Modal */}
 

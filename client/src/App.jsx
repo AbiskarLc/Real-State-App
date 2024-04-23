@@ -9,6 +9,8 @@ import PrivateRoute from './Components/PrivateRoute';
 import SignUp from './Pages/SignUp';
 import About from './Pages/About';
 import CreateListing from './Components/CreateListing';
+import EditListing from './Components/EditListing';
+import List from './Components/List';
 function App() {
 
   return (
@@ -21,10 +23,11 @@ function App() {
       <Route element={<PrivateRoute/>}>
       <Route element={<Profile/>} path="/profile"/>
       <Route element={<CreateListing/>} path='/create-listing'/>
+      <Route element={<EditListing/>} path='/editlist/:listId'/>
       </Route>
       <Route element={<Dashboard/>} path='/dashboard'/>
+      <Route element={<List/>} path={"/list/:listId"}/>
       <Route element={<SignUp/>} path="/signup"/>
-      <Route  element={<></>} path='/lists/'/>
       <Route element={<About/>} path="/about"/>
 
     </Routes>

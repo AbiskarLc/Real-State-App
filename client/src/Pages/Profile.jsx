@@ -19,7 +19,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { FaArrowDown } from "react-icons/fa";
+import { FaArrowDown, FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import Message from "../Components/Message";
 import { Link } from "react-router-dom";
@@ -49,7 +49,7 @@ const Profile = () => {
     if (file) {
       uploadFileTask();
     }
-  }, []);
+  }, [file]);
   console.log(lists);
   if (fileerror || message) {
     setTimeout(() => {
@@ -172,7 +172,7 @@ const Profile = () => {
   const handleListDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8000/api/user/deleteList/${id}`,
+        `http://localhost:8000/api/list/deleteList/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -194,6 +194,7 @@ const Profile = () => {
       console.log(error);
     }
   };
+  console.log(file);
   return (
     <>
       <div className="max-w-xl mx-auto w-full min-h-screen pb-3">
@@ -257,20 +258,23 @@ const Profile = () => {
             value={formdata.email}
             disabled={true}
           />
+          <div className=" relative">
           <TextInput
+          className=" w-full"
             type={show ? "text" : "password"}
             name="password"
             value={formdata.password}
             placeholder="Enter password"
             onChange={handleChange}
           />
+          {
+            show? <FaEyeSlash onClick={toggleShowPassword} className=" cursor-pointer absolute right-2 top-3"/>:
+          <FaEye  onClick={toggleShowPassword} className=" cursor-pointer absolute right-2 top-3"/>
+          }
+          </div>
+         
           <div>
-            <p
-              className="text-blue-600 underline cursor-pointer text-xs hover:text-gray-800 dark:hover:text-gray-200"
-              onClick={toggleShowPassword}
-            >
-              {show ? "hide password" : "show password"}
-            </p>
+           
           </div>
 
           <Button
@@ -344,7 +348,7 @@ const Profile = () => {
                       />
                       <div className=" flex justify-between flex-1 items-center">
                       <Link
-                        to={`/lists/${list._id}`}
+                        to={`/list/${list._id}`}
                         className=" text-gray-700 text-xl dark:text-gray-200 text-start font-semibold hover:underline"
                       >
                         {list.name.length > 30
@@ -352,9 +356,9 @@ const Profile = () => {
                           : list.name}
                       </Link>
                       <div className=" flex flex-col justify-center items-center gap-1">
-                        <p className=" text-green-500 hover:underline text-lg cursor-pointer">
+                        <Link to={`/editlist/${list._id}`} className=" text-green-500 hover:underline text-lg cursor-pointer">
                           Edit
-                        </p>
+                        </Link>
                         <p
                           className=" text-red-600 hover:underline text-lg cursor-pointer"
                           onClick={() => handleListDelete(list._id)}

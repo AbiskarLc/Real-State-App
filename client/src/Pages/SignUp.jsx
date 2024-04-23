@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {Alert, Button, Spinner, TextInput} from 'flowbite-react';
-import { FaGoogle } from "react-icons/fa";
+import { FaGoogle,FaEye,FaEyeSlash } from "react-icons/fa";
 import {Link,useNavigate} from "react-router-dom"
 import axios from 'axios';
 import OAuth from '../Components/OAuth';
@@ -8,6 +8,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [user,setUser] = useState()
  const [error,setError] = useState(null);
+ const [showPassword,setShowPassword] = useState(false);
  const [loading,setLoading] = useState(false);
   const handleOnChange = (e) =>{
 
@@ -16,6 +17,10 @@ const SignUp = () => {
       [e.target.name]:e.target.value
     })
 
+  }
+
+  const toggleShowPassword = () =>{
+    setShowPassword(showPassword?false:true);
   }
 
   if(error){
@@ -56,7 +61,13 @@ const SignUp = () => {
       <form  className='flex flex-col gap-4 text-center' onSubmit={handleSubmit}>
         <TextInput placeholder='Username' onChange={handleOnChange} type='text' name='username'/>
         <TextInput placeholder='Email' onChange={handleOnChange} type='email' name='email'/>
-        <TextInput placeholder='Password' onChange={handleOnChange} type='password' name='password'/>
+        <div className='relative'>
+        <TextInput type={showPassword?"text":"password"} className='w-full' placeholder='Enter your password' onChange={handleOnChange} name='password'/>
+        {
+          showPassword?
+          <FaEyeSlash onClick={toggleShowPassword}  className=" cursor-pointer absolute right-2 top-3"/>: <FaEye onClick={toggleShowPassword} className=" cursor-pointer absolute right-2 top-3"/>
+        }
+        </div>
 
         <Button gradientDuoTone={"purpleToPink"} type='submit'  outline>{loading?<><Spinner size={"sm"}/> <span className='ml-1 text-sm'>Loading...</span></>  :"Sign Up"}</Button>
         <OAuth text={"Signup With Google"}/>

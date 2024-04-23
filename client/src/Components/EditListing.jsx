@@ -1,16 +1,19 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { Checkbox,Spinner, TextInput, Textarea,Label, FileInput, Button } from 'flowbite-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { app } from '../firebase';
 import Message from './Message';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
-const CreateListing = () => {
+const EditListing = () => {
 
+
+const {listId} = useParams();
+console.log(listId);
   const navigate = useNavigate();
   const {currentUser} = useSelector((state)=>state.user)
   const [files,setFiles] = useState([]);
@@ -19,23 +22,42 @@ const CreateListing = () => {
   const [message,setMessage] = useState(null);
   const [errormessage,seterrorMessage] = useState(null);
   const [formData,setFormData] = useState({
-    imageUrls: [],
-    name:'',
-    description:'',
-    address:'',
-    regularPrice: 50,
-    discountedPrice:0,
-    bathrooms:1,
-    bedrooms:1,
-    offer:false,
-    type: 'rent',
-    parking:false,
-    furnished:false,
-    userRef: currentUser._id
+    imageUrls: []
+  });
 
-  })
-  console.log(formData);
+  useEffect(()=>{
 
+    getPostToEdit();
+
+  },[])
+
+
+  const getPostToEdit = async() =>{
+
+
+    try {
+
+      const response = await axios.get(`http://localhost:8000/api/list/getlist/${listId}`,
+    {
+      headers:{
+        "Content-Type":"application/json"
+      },
+      withCredentials:true
+    });
+
+    if(response.data){
+
+      setFormData(response.data);
+    }
+      
+    } catch (error) {
+      seterrorMessage(error.response.data.message);
+      console.log(error)
+    }
+  }
+
+
+  
   const handleChange = (e) =>{
 
  if(e.target.id==="sell" || e.target.id==="rent"){
@@ -89,7 +111,7 @@ seterrorMessage(null);
       setSubmitState(true);
       try {
         
-        const response = await axios.post("http://localhost:8000/api/list/createList",
+        const response = await axios.put(`http://localhost:8000/api/list/updateList/${listId}`,
       formData,
     {
       headers:{
@@ -99,7 +121,7 @@ seterrorMessage(null);
     })
     if(response.data){
       setMessage(response.data.message);
-      navigate(`/lists/${response.data.list._id}`)
+      navigate(`/profile`)
     }
       } catch (error) {
         seterrorMessage(error.response.data.message)
@@ -271,11 +293,11 @@ formData.offer &&
             </div>
           })
         }
-        <Button gradientDuoTone={"purpleToPink"} type='submit' disabled={submitstate} outline>{submitstate?<><span className=' cursor-pointer'>Creating lists...</span> <Spinner size={"sm"}/></>:"Create Listing"}</Button>
+        <Button gradientDuoTone={"purpleToPink"} type='submit' disabled={submitstate} outline>{submitstate?<><span className=' cursor-pointer'>Updating lists...</span> <Spinner size={"sm"}/></>:"Update Listing"}</Button>
     </div>
 </form>
     </div>
   )
 }
 
-export default CreateListing
+export default EditListing;

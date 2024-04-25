@@ -98,5 +98,26 @@ const getUserLists = async (req,res,next) =>{
 }
 
 
+const getListUserInfo = async (req,res,next ) =>{
 
-module.exports = { updateUser,deleteUser,getUserLists};
+  try {
+
+    const userId = req.params.userId;
+
+    const user = await User.findById(userId);
+
+    if(!user){
+      return next({status:404,message:"LandLord Not Found"});
+    }
+
+    const {password:pass,...rest} = user._doc;
+
+
+    return res.status(200).json(rest);
+    
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { updateUser,deleteUser,getUserLists,getListUserInfo};

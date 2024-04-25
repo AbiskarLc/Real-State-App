@@ -1,6 +1,6 @@
 const List = require("../Database/Model/List");
+const User = require("../Database/Model/User")
 const createList = async (req, res, next) => {
-  console.log(req.body);
   try {
     const list = await List.create(req.body);
 
@@ -92,4 +92,55 @@ const getList = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = { createList, deleteUserList, updateUserList,getList };
+
+const getListingBasedOnSearch = async (req,res,next) =>{
+
+  try {
+    
+    const limit = parseInt(req.query.limit) || 9;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const sort = req.query.sort || "createdAt";
+    const order = req.query.order || "desc";
+    let offer = req.query.offer;
+    let furnished = req.query.furnished;
+    let parking = req.query.parking;
+  let  type = req.query.type;
+    const searchTerm = req.query.searchTerm;
+
+    if(offer === undefined || offer === "false"){
+
+      offer = {$in : [true,false]}
+    }
+    if(furnished === undefined || furnished === "false"){
+
+      furnished = {$in : [true,false]}
+    }
+    if(parking === undefined || parking === "false"){
+
+      parking = {$in : [true,false]}
+    }
+    if(type === undefined || type === "false"){
+
+      type = {$in : ["rent","sell"]}
+    }
+
+  
+    const lists = await List.find({
+      name: {$regex : searchTerm,$options:'i'},
+      offer,
+      parking,
+      furnished,
+      type
+    }).sort({
+      [sort]: order
+    }).limit(limit).skip(startIndex);
+
+
+    
+    return res.status(200).json(lists);
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { createList, deleteUserList, updateUserList,getList,getListingBasedOnSearch };

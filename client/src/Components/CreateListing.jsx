@@ -99,7 +99,7 @@ seterrorMessage(null);
     })
     if(response.data){
       setMessage(response.data.message);
-      navigate(`/lists/${response.data.list._id}`)
+      navigate(`/list/${response.data.list._id}`)
     }
       } catch (error) {
         seterrorMessage(error.response.data.message)
@@ -223,7 +223,7 @@ setLoading(false);
     </div>
     </div>
     <div className="flex items-center gap-2">
-    <TextInput type='number' name='regularPrice' min={50} max={1000}  value={formData.regularPrice} onChange={handleChange}/>
+    <TextInput type='number' name='regularPrice' min={50} value={formData.regularPrice} onChange={handleChange}/>
     <div>
 
     <Label htmlFor="price" className='text-sm' >Regular price a month</Label>

@@ -1,6 +1,6 @@
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaMoon, FaSearch, FaSun } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../Redux/Theme/ThemeSlice";
@@ -9,13 +9,31 @@ const Header = () => {
 
   const user = useSelector(state=>state.user);
 const context = useContext(stateContext);
+const navigate = useNavigate();
 const {signOutUser} = context;
+const [searchTerm,setSearchTerm] = useState('');
   const {currentUser} = user;
   const {theme} = useSelector(state=>state.theme)
   const location = useLocation();
   const [acive, setActive] = useState();
 const dispatch = useDispatch();
 
+useEffect(()=>{
+  const urlParams = new URLSearchParams(location.search);
+  const searchData = urlParams.get("searchTerm")
+  setSearchTerm(searchData);
+
+
+},[location.search])
+const handleSubmit = (e) =>{
+
+  e.preventDefault();
+  const urlParams = new URLSearchParams(location.search);
+  urlParams.set('searchTerm',searchTerm);
+
+  const searchQuery = urlParams.toString();
+  navigate(`/search?${searchQuery}`);
+}
   useEffect(()=>{
 setActive(location.pathname);
   },[location.pathname])
@@ -29,8 +47,8 @@ setActive(location.pathname);
             <span className="text-gray-800 dark:text-gray-300">Estate</span>
           </h1>
         </Navbar.Brand>
-       <form className="flex items-center" >
-        <TextInput type="text" placeholder="Search..." className="text-xl w-24 sm:w-auto md:block" rightIcon={FaSearch} />
+       <form className="flex items-center" onSubmit={handleSubmit} >
+        <TextInput type="text"  value={searchTerm} placeholder="Search..." onChange={(e)=> setSearchTerm(e.target.value)} className="text-xl w-30 sm:w-auto md:block" rightIcon={FaSearch} />
     
        </form>
 

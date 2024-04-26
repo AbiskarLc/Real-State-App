@@ -3,8 +3,8 @@ const errorMiddleware = require("./Middleware/error-middleware");
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-
-
+const path = require('path');
+const __dirname = path.resolve();
 const connectDbs = require("./Database/connection");
 const app = express();
 const port = process.env.PORT || 8000;
@@ -23,6 +23,13 @@ app.use(cookieParser());
 app.use("/api/user",userroute);
 app.use("/api/auth",authroute);
 app.use("/api/list",listroute);
+
+app.use(express.static(path.join(__dirname,"/client/dist")));
+
+app.get("*",(req,res)=>{
+
+  res.sendFile(path.join(__dirname,"client","dist","index.html"))
+});
 
 app.use(errorMiddleware);
 

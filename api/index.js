@@ -22,13 +22,12 @@ app.use(cookieParser());
 app.use("/api/user",userroute);
 app.use("/api/auth",authroute);
 app.use("/api/list",listroute);
-const dirname = path.resolve();
-app.use(express.static(path.join(dirname,"/client/dist")));
+app.use(express.static(path.join(__dirname,"/client/dist")));
 
 
 app.get("*",(req,res)=>{
 
-  res.sendFile(path.join(dirname,"client","dist","index.html"))
+  res.sendFile(path.join(__dirname,"client","dist","index.html"))
 });
 
 app.use(errorMiddleware);

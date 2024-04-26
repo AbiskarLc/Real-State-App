@@ -22,7 +22,6 @@ app.use(cookieParser());
 app.use("/api/user",userroute);
 app.use("/api/auth",authroute);
 app.use("/api/list",listroute);
-
 app.use(express.static(path.join(__dirname,"/client/dist")));
 
 app.get("*",(req,res)=>{

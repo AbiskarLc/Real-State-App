@@ -15,6 +15,7 @@ const Search = () => {
     furnished: false,
     order: "desc",
     sort: "createdAt",
+    type:"rent"
   });
 
   const handleChange = (e) => {
@@ -43,16 +44,18 @@ const Search = () => {
       });
     }
   };
-
-  console.log(location.search);
   useEffect(() => {
 
     const urlParams = new URLSearchParams(location.search);
     const term = urlParams.get("searchTerm");
+    const offer = urlParams.get('offer');
+    const type = urlParams.get('type')
     setSearchItem(
       {
         ...searchItem,
-        searchTerm:term
+        searchTerm:term,
+        offer: offer,
+        type:type
       }
     )
     const fetchSearchResult = async () => {
@@ -111,7 +114,7 @@ const Search = () => {
         </div>
         <div className=" flex gap-2 items-center">
           <p className="text-sm font-semibold">Type:</p>
-          <Select className="w-full" name="type" onChange={handleChange}>
+          <Select className="w-full" name="type" value={searchItem.type} onChange={handleChange}>
             <option value={"rent"}>Rent</option>
             <option value={"sell"}>Sell</option>
             <option value={"all"}>All</option>

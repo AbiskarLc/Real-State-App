@@ -8,7 +8,7 @@ const CardItem = ({list}) => {
     const navigate = useNavigate();
     
   return (
-   <div className=' flex flex-col  mx-auto  h-auto shadow-md border-2 rounded-lg sm:w-[300px] border-teal-400 cursor-pointer card '  onClick={()=> navigate(`/list/${list._id}`) }>
+   <div className=' flex flex-col  h-auto shadow-md border-2 rounded-lg sm:w-[300px] border-teal-400 cursor-pointer card '  onClick={()=> navigate(`/list/${list._id}`) }>
     <img src={list.imageUrls[0]} alt={`image of ${list.name}`} className=' w-full h-[200px] rounded-t-lg border-b-2'/>
     <div className=' flex  flex-col p-2 justify-center gap-1'>
         <p className=' text-lg font-semibold'>{list.name.length>20?list.name.slice(0,30):list.name}...</p>

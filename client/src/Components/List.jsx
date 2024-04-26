@@ -56,7 +56,7 @@ const List = () => {
     if(success){
         return (
 
-            <div className="min-h-screen pb-2 mx-2 text-black dark:text-gray-300">
+            <div className="min-h-screen pb-2 mx-2 text-black dark:text-gray-300 mt-4">
          
          
         {
@@ -66,7 +66,7 @@ const List = () => {
             return (
                 <>
                 <SwiperSlide key={url} >
-                <div className=" h-[550px] rounded-lg" style={{background: `url(${url}) no-repeat`,backgroundSize:"100% 100%",backgroundPosition:"center"}}>
+                <div className=" sm:h-[550px] h-[250px] rounded-lg" style={{background: `url(${url}) no-repeat`,backgroundSize:"100% 100%",backgroundPosition:"center"}}>
         
                 </div>
                 </SwiperSlide>

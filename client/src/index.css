@@ -19,3 +19,16 @@
     -ms-transform:translateY(10px) ;
     -o-transform:translateY(10px) ;
 }
+
+.home-page{
+
+    background: linear-gradient(to right, rgb(5, 117, 230), rgb(2, 27, 121));
+
+}
+
+.heading{
+
+    background: -webkit-linear-gradient(red,rgb(250,160,20));
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}

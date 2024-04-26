@@ -41,8 +41,8 @@ setActive(location.pathname);
   return (
     <div className=" mx-auto  dark:text-gray-600 shadow-sm">
       <Navbar>
-        <Navbar.Brand>
-          <h1 className=" text-gray-500 text-lg font-bold">
+        <Navbar.Brand >
+          <h1 className=" text-gray-500 text-lg font-bold cursor-pointer" onClick={ ()=> navigate("/")}>
             Abiskar
             <span className="text-gray-800 dark:text-gray-300">Estate</span>
           </h1>
@@ -91,9 +91,6 @@ setActive(location.pathname);
           <Navbar.Link as={"div"}  className=" cursor-pointer md:text-md" active={acive==="/"}>
             <Link to={"/"}>Home</Link>
 
-          </Navbar.Link>
-          <Navbar.Link as={"div"} className=" cursor-pointer md:text-md"  active={acive==="/dashboard"}>
-           <Link to={"/profile"}>Dashboard</Link>
           </Navbar.Link>
           <Navbar.Link as={"div"} className=" cursor-pointer md:text-md">
           <Link to={"/about"}>About</Link>

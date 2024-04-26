@@ -245,7 +245,7 @@ setLoading(false);
     </div>
     </div>
     <div className="flex items-center gap-2">
-    <TextInput type='number' name='regularPrice' min={50} max={1000}  value={formData.regularPrice} onChange={handleChange}/>
+    <TextInput type='number' name='regularPrice' min={50} value={formData.regularPrice} onChange={handleChange}/>
     <div>
 
     <Label htmlFor="price" className='text-sm' >Regular price a month</Label>

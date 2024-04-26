@@ -105,7 +105,7 @@ const getListingBasedOnSearch = async (req,res,next) =>{
     let furnished = req.query.furnished;
     let parking = req.query.parking;
   let  type = req.query.type;
-    const searchTerm = req.query.searchTerm;
+    const searchTerm = req.query.searchTerm || "";
 
     if(offer === undefined || offer === "false"){
 
@@ -142,5 +142,7 @@ const getListingBasedOnSearch = async (req,res,next) =>{
     next(error)
   }
 }
+
+
 
 module.exports = { createList, deleteUserList, updateUserList,getList,getListingBasedOnSearch };

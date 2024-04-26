@@ -26,8 +26,6 @@ function App() {
       <Route element={<CreateListing/>} path='/create-listing'/>
       <Route element={<EditListing/>} path='/editlist/:listId'/>
       </Route>
-      
-      <Route element={<Dashboard/>} path='/dashboard'/>
       <Route element={<Search/>} path='/search'/>
       <Route element={<List/>} path={"/list/:listId"}/>
       <Route element={<SignUp/>} path="/signup"/>

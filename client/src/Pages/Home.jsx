@@ -95,7 +95,7 @@ const Home = () => {
   };
   return (
     <div className=" mx-auto min-h-screen">
-      <div className=" grid sm:grid-cols-2 sm:grid-rows-none grid-rows-2 place-content-center sm:h-[500px] home-page">
+      <div className=" grid sm:grid-cols-2 sm:grid-rows-none gap-2 grid-rows-2 place-content-center sm:h-[500px] home-page">
         <div className=" flex flex-col justify-center items-center">
           <h1 className=" p-4  font-serif font-bold text-2xl sm:text-4xl  heading text-center ">
             Find Your Dream House <br /> at Abiskar RealState <br /> WebApp
@@ -152,7 +152,7 @@ const Home = () => {
       {/* Listing Sections */}
 
       {offerlists.length > 0 && (
-        <div className=" mt-5 pb-6 flex flex-col mx-20">
+        <div className=" mt-5 pb-6 flex flex-col mx-8 sm:mx-20">
           <h1 className=" text-2xl   font-semibold">Recent Offers</h1>
           <p
             className="text-sm text-teal-400 font-semibold cursor-pointer"
@@ -198,7 +198,7 @@ const Home = () => {
       {/* Rent Offer */}
 
       {rentLists.length > 0 && (
-        <div className=" mt-5 pb-6 flex flex-col mx-20">
+        <div className=" mt-5 pb-6 flex flex-col mx-8 sm:mx-20">
           <h1 className=" text-2xl   font-semibold">Recent Property On Rent</h1>
           <p
             className="text-sm text-teal-400 font-semibold cursor-pointer"
@@ -243,7 +243,7 @@ const Home = () => {
 
       {/* Property for sale full furnished */}
       {sellLists.length > 0 && (
-        <div className=" mt-5 pb-6 flex flex-col mx-20">
+        <div className=" mt-5 pb-6 flex flex-col mx-8 sm:mx-20">
           <h1 className=" text-2xl   font-semibold">Recent Property On Sell</h1>
           <p
             className="text-sm text-teal-400 font-semibold cursor-pointer"

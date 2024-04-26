@@ -44,11 +44,11 @@ setActive(location.pathname);
         <Navbar.Brand >
           <h1 className=" text-gray-500 text-lg font-bold cursor-pointer" onClick={ ()=> navigate("/")}>
             Real
-            <span className="text-gray-800 dark:text-gray-300">Estate App</span>
+            <span className="text-gray-800 dark:text-gray-300">Estate</span>
           </h1>
         </Navbar.Brand>
        <form className="flex items-center" onSubmit={handleSubmit} >
-        <TextInput type="text"  value={searchTerm} placeholder="Search..." onChange={(e)=> setSearchTerm(e.target.value)} className="text-xl w-30 sm:w-auto md:block" rightIcon={FaSearch} />
+        <TextInput type="text"  value={searchTerm} placeholder="Search..." onChange={(e)=> setSearchTerm(e.target.value)} className="text-xl w-20 sm:w-auto md:block" rightIcon={FaSearch} />
     
        </form>
 
@@ -94,6 +94,9 @@ setActive(location.pathname);
           </Navbar.Link>
           <Navbar.Link as={"div"} className=" cursor-pointer md:text-md">
           <Link to={"/about"}>About</Link>
+          </Navbar.Link>
+          <Navbar.Link as={"div"} className=" cursor-pointer sm:hidden">
+          <Link to={"/signup"}>Sign up</Link>
           </Navbar.Link>
         </Navbar.Collapse>
       </Navbar>

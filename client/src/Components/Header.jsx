@@ -43,8 +43,8 @@ setActive(location.pathname);
       <Navbar>
         <Navbar.Brand >
           <h1 className=" text-gray-500 text-lg font-bold cursor-pointer" onClick={ ()=> navigate("/")}>
-            Abiskar
-            <span className="text-gray-800 dark:text-gray-300">Estate</span>
+            Real
+            <span className="text-gray-800 dark:text-gray-300">Estate App</span>
           </h1>
         </Navbar.Brand>
        <form className="flex items-center" onSubmit={handleSubmit} >
